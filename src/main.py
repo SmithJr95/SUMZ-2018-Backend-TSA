@@ -62,9 +62,11 @@ def make_predictions():
     if num_samples <= 0 or num_samples > 500:
         abort(400, f"invalid json input: '{JsonRequestKeys.NumberOfSamples.value}' must be between 1 and 500.")
 
+    response = {}
     result = predict(time_series=time_series, pred_steps=pred_steps, num_samples=num_samples)
+    response['timeSeries'] = result
 
-    return jsonify(result)
+    return jsonify(response)
 
 
 @app.errorhandler(Exception)
